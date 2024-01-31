@@ -1,8 +1,9 @@
 
-# Update and fixed by kk-vv
-[F] Fix Transaction decode from data
-[U] Limit Starscream version
-[U] Update secp256k1 package cause conflict with btckit
+# Update and fixed by [kk-vv](https://github.com/kk-vv)
+
+- [x] Fix Transaction decode from data
+- [x] Limit Starscream version
+- [x] Update secp256k1 package cause conflict with btckit
 
 ---
 
