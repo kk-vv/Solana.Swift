@@ -1,3 +1,12 @@
+
+# Update and fixed by kk-vv
+[F] Fix Transaction decode from data
+[U] Limit Starscream version
+[U] Update secp256k1 package cause conflict with btckit
+
+---
+
+
 # ⛓️ Solana.Swift
 [![Swift](https://github.com/metaplex-foundation/Solana.Swift/actions/workflows/swift.yml/badge.svg?branch=master)](https://github.com/metaplex-foundation/Solana.Swift/actions/workflows/swift.yml)
 [![MIT Licence](https://badges.frapsoft.com/os/mit/mit.png?v=103)](https://opensource.org/licenses/mit-license.php) [![Swift Package Manager compatible](https://img.shields.io/badge/SPM-compatible-brightgreen.svg?style=flat&colorA=28a745&&colorB=4E4E4E)](https://github.com/apple/swift-package-manager)
