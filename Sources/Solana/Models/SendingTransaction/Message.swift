@@ -7,7 +7,7 @@ struct CompiledInstruction {
 }
 
 extension Transaction {
-    struct Message {
+    public struct Message {
         static let PUBKEY_LENGTH = 32
         
         // MARK: - Constants
@@ -18,6 +18,12 @@ extension Transaction {
         var recentBlockhash: String
         //        var instructions: [Transaction.Instruction]
         var programInstructions: [TransactionInstruction]
+        
+        public init(accountKeys: [AccountMeta], recentBlockhash: String, programInstructions: [TransactionInstruction]) {
+            self.accountKeys = accountKeys
+            self.recentBlockhash = recentBlockhash
+            self.programInstructions = programInstructions
+        }
 
         func serialize() -> Result<Data, Error> {
             // Construct data
