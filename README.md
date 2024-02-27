@@ -4,7 +4,7 @@
 - [x] Fix Transaction decode from data
 - [x] Limit Starscream version
 - [x] Update secp256k1 package cause conflict with btckit
-
+- [x] Fix send spl token
 ---
 
 
