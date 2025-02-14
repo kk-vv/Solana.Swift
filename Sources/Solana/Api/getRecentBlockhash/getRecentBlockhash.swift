@@ -6,7 +6,7 @@ public extension Api {
     ///   - commitment: The commitment describes how finalized a block is at that point in time (finalized, confirmed, processed)
     ///   - onComplete: The result of a Hash as base-58 encoded string
     func getRecentBlockhash(commitment: Commitment? = nil, onComplete: @escaping(Result<String, Error>) -> Void) {
-        router.request(parameters: [RequestConfiguration(commitment: commitment)]) { (result: Result<Rpc<Fee?>, Error>) in
+      router.request(bcMethod: "getLatestBlockhash", parameters: [RequestConfiguration(commitment: commitment)]) { (result: Result<Rpc<Fee?>, Error>) in
             switch result {
             case .success(let rpc):
                 guard let value = rpc.value else {
