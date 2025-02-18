@@ -6,6 +6,8 @@ extension Action {
         from fromPublicKey: String,
         to destinationAddresses: [String],
         amount: UInt64,
+        gasLimit: TransactionInstruction? = nil,  //ComputeBudgetProgram.setComputeUnitLimit(units: 500000),
+        priorityFee: TransactionInstruction? = nil, // ComputeBudgetProgram.setComputeUnitPrice(microLamports: 10 * 5000)
         allowUnfundedRecipient: Bool = false,
         payer: Signer,
         onComplete: @escaping (Result<TransactionID, Error>) -> Void
@@ -61,6 +63,15 @@ extension Action {
               
               instructions.append(sendInstruction)
             }
+            
+            if let gasLimit = gasLimit {
+              instructions.append(gasLimit)
+            }
+            
+            if let priorityFee = priorityFee {
+              instructions.append(priorityFee)
+            }
+            
             self.serializeAndSendWithFee(instructions: instructions, signers: [payer]) {
               onComplete($0)
             }
@@ -85,6 +96,8 @@ public extension Action {
         from fromPublicKey: String,
         to destinationAddress: [String],
         amount: UInt64,
+        gasLimit: TransactionInstruction? = nil,
+        priorityFee: TransactionInstruction? = nil,
         allowUnfundedRecipient: Bool = false,
         payer: Signer
     ) async throws -> TransactionID {
@@ -94,6 +107,8 @@ public extension Action {
                 from: fromPublicKey,
                 to: destinationAddress,
                 amount: amount,
+                gasLimit: gasLimit,
+                priorityFee: priorityFee,
                 allowUnfundedRecipient: allowUnfundedRecipient,
                 payer: payer,
                 onComplete: c.resume(with:)
@@ -110,11 +125,23 @@ extension ActionTemplates {
         public let amount: UInt64
         public let payer: Signer
         public let allowUnfundedRecipient: Bool
+        public let gasLimit: TransactionInstruction?
+        public let priorityFee: TransactionInstruction?
 
         public typealias Success = TransactionID
 
         public func perform(withConfigurationFrom actionClass: Action, completion: @escaping (Result<TransactionID, Error>) -> Void) {
-            actionClass.sendSPLTokens(mintAddress: mintAddress, from: fromPublicKey, to: destinationAddress, amount: amount, allowUnfundedRecipient: allowUnfundedRecipient, payer: payer, onComplete: completion)
+            actionClass.sendSPLTokens(
+              mintAddress: mintAddress,
+              from: fromPublicKey,
+              to: destinationAddress,
+              amount: amount,
+              gasLimit: gasLimit,
+              priorityFee: priorityFee,
+              allowUnfundedRecipient: allowUnfundedRecipient,
+              payer: payer,
+              onComplete: completion
+            )
         }
     }
 }

@@ -7,6 +7,8 @@
 - [x] Fix getLatestBlockhash function call
 - [x] Add SOL bulk transfer
 - [x] Add SPL token bulk transfer
+- [x] Add ComputeBudgetProgram for custom gas limit and priority fee
+
 ---
 
 # ⛓️ Solana.Swift

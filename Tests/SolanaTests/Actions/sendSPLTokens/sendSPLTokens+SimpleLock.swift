@@ -30,16 +30,22 @@ extension Action {
         from fromPublicKey: String,
         to destinationAddress: [String],
         amount: UInt64,
-        payer: Signer
+        payer: Signer,
+        gasLimit: TransactionInstruction? = nil,
+        priorityFee: TransactionInstruction? = nil
     ) -> Result<TransactionID, Error>? {
         var transaction: Result<TransactionID, Error>?
         let lock = RunLoopSimpleLock()
         lock.dispatch { [weak self] in
-            self?.sendSPLTokens(mintAddress: mintAddress,
-                                from: fromPublicKey,
-                                to: destinationAddress,
-                                amount: amount,
-                                payer: payer) {
+            self?.sendSPLTokens(
+              mintAddress: mintAddress,
+              from: fromPublicKey,
+              to: destinationAddress,
+              amount: amount,
+              gasLimit: gasLimit,
+              priorityFee: priorityFee,
+              payer: payer
+            ) {
                 transaction = $0
                 lock.stop()
             }

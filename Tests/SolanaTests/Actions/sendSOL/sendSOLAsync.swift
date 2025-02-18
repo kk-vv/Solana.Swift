@@ -4,7 +4,7 @@ import Solana
 @available(iOS 13.0, *)
 @available(macOS 10.15, *)
 class sendSOLAsync: XCTestCase {
-    var endpoint = RPCEndpoint.devnetSolana
+  var endpoint = RPCEndpoint.devnetSolana
     var solana: Solana!
     var signer: Signer!
 
@@ -23,7 +23,9 @@ class sendSOLAsync: XCTestCase {
         let transactionId = try await solana.action.sendSOL(
             to: [toPublicKey],
             from: signer,
-            amount: balance/10
+            amount: balance/10,
+            gasLimit: nil, //ComputeBudgetProgram.setComputeUnitLimit(units: 500000),
+            priorityFee: nil //ComputeBudgetProgram.setComputeUnitPrice(microLamports: 10 * 5000)
         )
         XCTAssertNotNil(transactionId)
     }
@@ -32,8 +34,10 @@ class sendSOLAsync: XCTestCase {
         let toPublicKey = "FLY7ePk6wQ2cWKPoU9FCZuA8gRtYmKJuM276nkmqmr7h"
         let transactionId = try await solana.action.sendSOL(
             to: [toPublicKey],
+            amount: 0.001.toLamport(decimals: 9),
             from: signer,
-            amount: 0.001.toLamport(decimals: 9)
+            gasLimit: nil, //ComputeBudgetProgram.setComputeUnitLimit(units: 500000),
+            priorityFee: nil //ComputeBudgetProgram.setComputeUnitPrice(microLamports: 10 * 5000)
         )
         XCTAssertNotNil(transactionId)
     }
@@ -44,7 +48,9 @@ class sendSOLAsync: XCTestCase {
             try await solana.action.sendSOL(
                 to: [toPublicKey],
                 from: signer,
-                amount: 0.001.toLamport(decimals: 9)
+                amount: 0.001.toLamport(decimals: 9),
+                gasLimit: nil, //ComputeBudgetProgram.setComputeUnitLimit(units: 500000),
+                priorityFee: nil //ComputeBudgetProgram.setComputeUnitPrice(microLamports: 10 * 5000)
             )
         }
     }
@@ -54,7 +60,9 @@ class sendSOLAsync: XCTestCase {
             try await solana.action.sendSOL(
                 to: [toPublicKey],
                 from: signer,
-                amount: 9223372036854775808
+                amount: 9223372036854775808,
+                gasLimit: nil, //ComputeBudgetProgram.setComputeUnitLimit(units: 500000),
+                priorityFee: nil //ComputeBudgetProgram.setComputeUnitPrice(microLamports: 10 * 5000)
             )
         }
 

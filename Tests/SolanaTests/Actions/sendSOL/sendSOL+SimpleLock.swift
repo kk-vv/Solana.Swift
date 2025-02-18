@@ -29,12 +29,21 @@ extension Action {
         to destination: [String],
         amount: UInt64,
         from: Signer,
+        gasLimit: TransactionInstruction? = nil,
+        priorityFee: TransactionInstruction? = nil,
         allowUnfundedRecipient: Bool = false
     ) -> Result<TransactionID, Error>? {
         var transaction: Result<TransactionID, Error>?
         let lock = RunLoopSimpleLock()
         lock.dispatch { [weak self] in
-            self?.sendSOL(to: destination, from: from, amount: amount,allowUnfundedRecipient: allowUnfundedRecipient) {
+            self?.sendSOL(
+              to: destination,
+              from: from,
+              amount: amount,
+              gasLimit: gasLimit,
+              priorityFee: priorityFee,
+              allowUnfundedRecipient: allowUnfundedRecipient
+            ) {
                 transaction = $0
                 lock.stop()
             }

@@ -24,7 +24,9 @@ class sendSPLTokens: XCTestCase {
             from: source,
             to: [destination],
             amount: Double(0.001).toLamport(decimals: 5),
-            payer: signer
+            payer: signer,
+            gasLimit: ComputeBudgetProgram.setComputeUnitLimit(units: 500000),
+            priorityFee: ComputeBudgetProgram.setComputeUnitPrice(microLamports: 10 * 5000)
         )?.get()
         XCTAssertNotNil(transactionId)
         
@@ -34,7 +36,9 @@ class sendSPLTokens: XCTestCase {
             from: destination,
             to: [source],
             amount: Double(0.001).toLamport(decimals: 5),
-            payer: signer
+            payer: signer,
+            gasLimit: ComputeBudgetProgram.setComputeUnitLimit(units: 500000),
+            priorityFee: ComputeBudgetProgram.setComputeUnitPrice(microLamports: 10 * 5000)
         )?.get()
         XCTAssertNotNil(transactionIdB)
     }
