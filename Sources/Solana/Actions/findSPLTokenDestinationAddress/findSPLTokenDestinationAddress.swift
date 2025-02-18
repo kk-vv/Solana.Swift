@@ -110,7 +110,7 @@ extension Action {
                     var isUnregisteredAsocciatedToken = true
                     // if associated token account has been registered
                     if info1.owner == PublicKey.tokenProgramId.base58EncodedString &&
-                        info.data.value != nil {
+                        info1.data.value != nil {
                         isUnregisteredAsocciatedToken = false
                     }
                     return .success((destination: toPublicKey, isUnregisteredAsocciatedToken: isUnregisteredAsocciatedToken))
