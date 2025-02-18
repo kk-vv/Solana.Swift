@@ -23,7 +23,7 @@ class sendSPLTokensAsync: XCTestCase {
             mintAddress: mintAddress,
             decimals: 5,
             from: source,
-            to: destination,
+            to: [destination],
             amount: Double(0.001).toLamport(decimals: 5),
             payer: signer
         )
@@ -32,8 +32,8 @@ class sendSPLTokensAsync: XCTestCase {
         let transactionIdB = try await solana.action.sendSPLTokens(
             mintAddress: mintAddress,
             decimals: 5,
-            from: destination,
-            to: source,
+            from: source,
+            to: [destination],
             amount: Double(0.001).toLamport(decimals: 5),
             payer: signer
         )

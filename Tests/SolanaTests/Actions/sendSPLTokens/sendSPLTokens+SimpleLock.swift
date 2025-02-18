@@ -28,7 +28,7 @@ extension Action {
         mintAddress: String,
         decimals: Decimals,
         from fromPublicKey: String,
-        to destinationAddress: String,
+        to destinationAddress: [String],
         amount: UInt64,
         payer: Signer
     ) -> Result<TransactionID, Error>? {

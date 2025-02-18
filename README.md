@@ -1,13 +1,13 @@
-
 # Update and fixed by [kk-vv](https://github.com/kk-vv)
 
 - [x] Fix Transaction decode from data
 - [x] Limit Starscream version
 - [x] Update secp256k1 package cause conflict with btckit
-- [x] Fix send spl token
-- [x] Fix getLatestBlockhash
+- [x] Fix send SPL token
+- [x] Fix getLatestBlockhash function call
+- [x] Add SOL bulk transfer
+- [x] Add SPL token bulk transfer
 ---
-
 
 # ⛓️ Solana.Swift
 [![Swift](https://github.com/metaplex-foundation/Solana.Swift/actions/workflows/swift.yml/badge.svg?branch=master)](https://github.com/metaplex-foundation/Solana.Swift/actions/workflows/swift.yml)

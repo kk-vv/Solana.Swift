@@ -15,13 +15,13 @@ class sendSOLAsync: XCTestCase {
     }
     
     func testSendSOLFromBalance() async throws {
-        let toPublicKey = "3h1zGmCwsRJnVk5BuRNMLsPaQu1y2aqXqXDWYCgrp5UG"
+        let toPublicKey = "FLY7ePk6wQ2cWKPoU9FCZuA8gRtYmKJuM276nkmqmr7h"
 
         let balance = try await solana.api.getBalance(account: signer.publicKey.base58EncodedString, commitment: nil)
         XCTAssertNotNil(balance)
 
         let transactionId = try await solana.action.sendSOL(
-            to: toPublicKey,
+            to: [toPublicKey],
             from: signer,
             amount: balance/10
         )
@@ -29,19 +29,20 @@ class sendSOLAsync: XCTestCase {
     }
     
     func testSendSOL() async throws {
-        let toPublicKey = "3h1zGmCwsRJnVk5BuRNMLsPaQu1y2aqXqXDWYCgrp5UG"
+        let toPublicKey = "FLY7ePk6wQ2cWKPoU9FCZuA8gRtYmKJuM276nkmqmr7h"
         let transactionId = try await solana.action.sendSOL(
-            to: toPublicKey,
+            to: [toPublicKey],
             from: signer,
             amount: 0.001.toLamport(decimals: 9)
         )
         XCTAssertNotNil(transactionId)
     }
+  
     func testSendSOLIncorrectDestination() async {
         let toPublicKey = "XX"
         await asyncAssertThrowing("sendSOL should fail when destination is incorrect") {
             try await solana.action.sendSOL(
-                to: toPublicKey,
+                to: [toPublicKey],
                 from: signer,
                 amount: 0.001.toLamport(decimals: 9)
             )
@@ -51,7 +52,7 @@ class sendSOLAsync: XCTestCase {
         let toPublicKey = "3h1zGmCwsRJnVk5BuRNMLsPaQu1y2aqXqXDWYCgrp5UG"
         await asyncAssertThrowing("sendSOL should fail when amount is too big") {
             try await solana.action.sendSOL(
-                to: toPublicKey,
+                to: [toPublicKey],
                 from: signer,
                 amount: 9223372036854775808
             )
