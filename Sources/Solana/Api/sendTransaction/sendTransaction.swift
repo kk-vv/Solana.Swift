@@ -30,7 +30,7 @@ public extension Api {
     ///   - configs: Configuration object 
     ///   - onComplete: The result object of the first Transaction Signature embedded in the transaction, as base-58 encoded string (transaction id)
     func sendTransaction(serializedTransaction: String,
-                         configs: RequestConfiguration = RequestConfiguration(encoding: "base64")!,
+                         configs: RequestConfiguration = RequestConfiguration(encoding: "base64", skipPreflight: true)!,
                          onComplete: @escaping(Result<TransactionID, Error>) -> Void) {
         router.request(parameters: [serializedTransaction, configs]) { (result: Result<TransactionID, Error>) in
             switch result {

@@ -23,7 +23,52 @@ extension Action {
             )
         }
     }
-
+  
+  public func asyncFindSPLTokenDestinationAddress(
+    mintAddress: String,
+    destinationAddress: String,
+    allowUnfundedRecipient: Bool = false
+  ) async throws -> Action.SPLTokenDestinationAddress {
+      if allowUnfundedRecipient {
+        if #available(iOS 13.0, *) {
+          return try await withCheckedThrowingContinuation { continuation in
+            checkSPLTokenAccountExistence(
+              mintAddress: mintAddress,
+              destinationAddress: destinationAddress,
+              onComplete: { result in
+                switch result {
+                case .success(let splTokenDestinationAddress):
+                  continuation.resume(returning: splTokenDestinationAddress)
+                case .failure(let failure):
+                  continuation.resume(throwing: failure)
+                }
+              }
+            )
+          }
+        } else {
+          throw SolanaError.other("Unsupported action")
+        }
+      } else {
+        if #available(iOS 13.0, *) {
+          return try await withCheckedThrowingContinuation { continuation in
+            findSPLTokenDestinationAddressOfExistingAccount(
+              mintAddress: mintAddress,
+              destinationAddress: destinationAddress,
+              onComplete: { result in
+                switch result {
+                case .success(let splTokenDestinationAddress):
+                  continuation.resume(returning: splTokenDestinationAddress)
+                case .failure(let failure):
+                  continuation.resume(throwing: failure)
+                }
+              }
+            )
+          }
+        } else {
+          throw SolanaError.other("Unsupported action")
+        }
+      }
+    }
     fileprivate func checkSPLTokenAccountExistence(
         mintAddress: String,
         destinationAddress: String,
@@ -105,15 +150,17 @@ extension Action {
                     self.api.getAccountInfo(
                         account: toPublicKey.base58EncodedString,
                         decodedTo: AccountInfo.self
-                    ) { cb($0)}
+                    ) {
+                      cb($0)
+                    }
                 }.flatMap { info1 in
                     var isUnregisteredAsocciatedToken = true
                     // if associated token account has been registered
                     if info1.owner == PublicKey.tokenProgramId.base58EncodedString &&
-                        info.data.value != nil {
+                        info1.data.value != nil {
                         isUnregisteredAsocciatedToken = false
                     }
-                    return .success((destination: toPublicKey, isUnregisteredAsocciatedToken: isUnregisteredAsocciatedToken))
+                  return .success((destination: toPublicKey, isUnregisteredAsocciatedToken: isUnregisteredAsocciatedToken))
                 }
             } else {
                 return .success((destination: toPublicKey, isUnregisteredAsocciatedToken: false))

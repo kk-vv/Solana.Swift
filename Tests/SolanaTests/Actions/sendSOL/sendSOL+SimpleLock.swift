@@ -26,7 +26,7 @@ extension Api {
 extension Action {
 
     func sendSOL(
-        to destination: String,
+        to destination: [String],
         amount: UInt64,
         from: Signer,
         allowUnfundedRecipient: Bool = false

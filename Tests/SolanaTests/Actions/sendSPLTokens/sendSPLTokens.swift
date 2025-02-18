@@ -22,7 +22,7 @@ class sendSPLTokens: XCTestCase {
             mintAddress: mintAddress,
             decimals: 5,
             from: source,
-            to: destination,
+            to: [destination],
             amount: Double(0.001).toLamport(decimals: 5),
             payer: signer
         )?.get()
@@ -32,7 +32,7 @@ class sendSPLTokens: XCTestCase {
             mintAddress: mintAddress,
             decimals: 5,
             from: destination,
-            to: source,
+            to: [source],
             amount: Double(0.001).toLamport(decimals: 5),
             payer: signer
         )?.get()
